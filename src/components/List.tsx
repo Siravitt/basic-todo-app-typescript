@@ -6,15 +6,15 @@ interface ListProps {
   onDelete: (idx: number) => void
 }
 
-export default function List(props: ListProps) {
+export default function List({title, complete, index, onComplete, onDelete}: ListProps) {
   return (
-    <div className={`w-full px-4 py-4 border border-black rounded-lg flex justify-between ${props.complete ? "bg-green-200" : "bg-red-200"}`}>
-      <div>{props.title}</div>
+    <div className={`w-full px-4 py-4 border border-black rounded-lg flex justify-between ${complete ? "bg-green-200" : "bg-red-200"}`}>
+      <div>{title}</div>
       <div className="flex gap-2">
-        {props.complete ? "" : <button onClick={() => props.onComplete(props.index)} className="w-20 rounded-lg bg-green-500 hover:bg-green-300 duration-150 text-sm text-white font-bold">
+        {complete ? "" : <button onClick={() => onComplete(index)} className="w-20 rounded-lg bg-green-500 hover:bg-green-300 duration-150 text-sm text-white font-bold">
           Complete
         </button>}
-        <button onClick={() => props.onDelete(props.index)} className="w-20 rounded-lg bg-red-500 hover:bg-red-300 duration-150 text-sm text-white font-bold">
+        <button onClick={() => onDelete(index)} className="w-20 rounded-lg bg-red-500 hover:bg-red-300 duration-150 text-sm text-white font-bold">
           Delete
         </button>
       </div>
