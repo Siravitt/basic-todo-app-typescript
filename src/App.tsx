@@ -1,29 +1,40 @@
 import { useState } from "react";
+import List from "./components/List";
 
-interface List {
+interface data {
   title: string,
   complete: boolean
 }
+let allList: data[] = [];
 
 function App() {
-  const [newList, setNewList] = useState<string>('')
-  const [list, setList] = useState<List>({ title: "Playgame", complete: true })
-  console.log(list);
+  const [addNewList, setAddNewList] = useState<string>('')
+  const [list, setList] = useState(allList)
+
+  const addList = (e: any) => {
+    e.preventDefault()
+    const newList = structuredClone(list);
+    newList.push({ title: addNewList, complete: false })
+    setList(newList)
+    setAddNewList("")
+  }
+
+  const onComplete = (idx: number) => {
+    const newList = structuredClone(list);
+    newList[idx].complete = true;
+    setList(newList);
+  }
+
   return (
     <div className="w-screen min-h-screen flex flex-col items-center py-10 gap-10">
       <div className="font-bold text-blue-600 text-xl">Todo App (typescript)</div>
-      <form className="flex gap-4">
-        <input type="text" className="border border-black rounded-lg px-2 text-sm" onChange={(e) => setNewList(e.target.value)} value={newList} />
+      <form className="flex gap-4" onSubmit={addList}>
+        <input type="text" className="border border-black rounded-lg px-2 text-sm" onChange={(e) => setAddNewList(e.target.value)} value={addNewList} />
         <button className="bg-blue-500 hover:bg-blue-300 duration-150 px-4 py-1 rounded-lg text-white text-sm font-bold">Add</button>
       </form>
+
       <div className="w-[400px] flex flex-col gap-2">
-        <div className="w-full px-4 py-4 border border-black rounded-lg flex justify-between">
-          <div>Playgame</div>
-          <div className="flex gap-2">
-            <button className="w-20 rounded-lg bg-green-500 hover:bg-green-300 duration-150 text-sm text-white font-bold">Complete</button>
-            <button className="w-20 rounded-lg bg-red-500 hover:bg-red-300 duration-150 text-sm text-white font-bold">Delete</button>
-          </div>
-        </div>
+        {list?.map((el, idx) => <List key={idx} title={el.title} complete={el.complete} index={idx} onComplete={onComplete} />)}
       </div>
     </div>
   );
