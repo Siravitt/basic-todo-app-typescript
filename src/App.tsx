@@ -25,6 +25,12 @@ function App() {
     setList(newList);
   }
 
+  const onDelete = (idx: number) => {
+    const newList = structuredClone(list);
+    newList.splice(idx, 1);
+    setList(newList);
+  }
+
   return (
     <div className="w-screen min-h-screen flex flex-col items-center py-10 gap-10">
       <div className="font-bold text-blue-600 text-xl">Todo App (typescript)</div>
@@ -34,7 +40,7 @@ function App() {
       </form>
 
       <div className="w-[400px] flex flex-col gap-2">
-        {list?.map((el, idx) => <List key={idx} title={el.title} complete={el.complete} index={idx} onComplete={onComplete} />)}
+        {list?.map((el, idx) => <List key={idx} title={el.title} complete={el.complete} index={idx} onComplete={onComplete} onDelete={onDelete} />)}
       </div>
     </div>
   );

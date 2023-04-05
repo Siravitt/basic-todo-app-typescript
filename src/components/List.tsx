@@ -3,6 +3,7 @@ interface ListProps {
   complete: boolean
   index: number
   onComplete: (idx: number) => void
+  onDelete: (idx: number) => void
 }
 
 export default function List(props: ListProps) {
@@ -13,7 +14,7 @@ export default function List(props: ListProps) {
         {props.complete ? "" : <button onClick={() => props.onComplete(props.index)} className="w-20 rounded-lg bg-green-500 hover:bg-green-300 duration-150 text-sm text-white font-bold">
           Complete
         </button>}
-        <button className="w-20 rounded-lg bg-red-500 hover:bg-red-300 duration-150 text-sm text-white font-bold">
+        <button onClick={() => props.onDelete(props.index)} className="w-20 rounded-lg bg-red-500 hover:bg-red-300 duration-150 text-sm text-white font-bold">
           Delete
         </button>
       </div>
